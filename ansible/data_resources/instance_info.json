@@ -10,7 +10,7 @@
             "capacity_reservation_specification": {
                 "capacity_reservation_preference": "open"
             },
-            "client_token": "3d942699c665425c8b7e72cd0fbbf433",
+            "client_token": " ",
             "cpu_options": {
                 "core_count": 1,
                 "threads_per_core": 2

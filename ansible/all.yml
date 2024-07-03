@@ -24,7 +24,25 @@ aws_info: "./data_resources/aws_info.json"
 aws_vpc_info: "./data_resources/aws_vpc_info.json"
 
 
+pub_rules:
+  - proto: tcp
+    ports:
+      - 80
+      - 443
+    cidr_ip: 0.0.0.0/0
+  - proto: tcp
+    ports:
+      - 22
+    cidr_ip: 0.0.0.0/0
 
+pri_rules:
+  - proto: tcp
+    ports:
+      - 80
+      - 443
+    cidr_ip: 10.0.0.0/16
+
+    
 instance_id_paths:
   - roles/manage-linux-vm-aws/defaults/main.yml
   - roles/start-linux-vm-aws/defaults/main.yml

@@ -56,16 +56,7 @@
     description: Public subnet security group
     vpc_id: "{{ vpc.vpc.id }}"
     region: "{{ aws_region }}"
-    rules:
-      - proto: tcp
-        ports:
-          - 80
-          - 443
-        cidr_ip: 0.0.0.0/0
-      - proto: tcp
-        ports:
-          - 22
-        cidr_ip: 0.0.0.0/0
+    rules: "{{ pub_rules }}"
   register: public_sg
 
 
@@ -81,12 +72,7 @@
     description: Private subnet security group
     vpc_id: "{{ vpc.vpc.id }}"
     region: "{{ aws_region }}"
-    rules:
-      - proto: tcp
-        ports:
-          - 80
-          - 443
-        cidr_ip: 10.0.0.0/16
+    rules: "{{ pri_rules }}"
   register: private_sg
 
 ################## Not necessary #########################

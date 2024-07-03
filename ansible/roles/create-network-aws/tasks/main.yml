@@ -121,7 +121,9 @@
       private_subnets: "{{ private_subnets }}"
       internet_gateway: "{{ igw }}"
       public_route_table: "{{ lu_public_rt }}"
-      security_group: "{{ public_sg }}"
+      security_groups:
+        - "{{ public_sg }}"
+        - "{{ private_sg}}"  
       region: "{{ aws_region }}"
 
 

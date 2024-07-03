@@ -1,2 +1,263 @@
 ---
 # tasks file for delete-all-aws
+
+
+
+
+
+#### HUH still need more enhance  :()  ########################
+
+
+- name: Read AWS information from file
+  slurp:
+    src: "{{ aws_info }}"
+  register: aws_info_file
+
+- name: Set AWS information fact for EC2 role
+  set_fact:
+    vpc_info: "{{ aws_info_file['content'] | b64decode | from_json }}"
+
+
+- name: "Debug VPC Info"
+  debug:
+    var: vpc_info
+
+
+
+# - name: Print AWS information
+#   debug:
+#     var: aws_info_file
+
+
+
+- name: "Query for any existing VPC(s)"
+  amazon.aws.ec2_vpc_net_info:
+    profile: "{{ aws_vpc_delete.profile }}"
+    region: "{{ aws_region }}"
+  register: vpc_info
+
+- name: "Debug VPC Info"
+  debug:
+    var: vpc_info
+
+
+
+- name: Get route table ID from name
+  amazon.aws.ec2_vpc_route_table_info:
+    region: "{{ aws_region }}"
+    filters:
+      "tag:Name": "{{ route_table_name }}"
+  register: route_table_info
+
+- name: Delete route table if route_table_name is defined
+  when: route_table_info.route_tables | length > 0
+  amazon.aws.ec2_vpc_route_table:
+    region: "{{ aws_region }}"
+    vpc_id: "{{ vpc_info.vpcs[0].vpc_id }}"
+    route_table_id: "{{ route_table_info.route_tables[0].route_table_id }}"
+    state: absent
+
+
+######################## subnets   ##############################
+- name: "Fetch subnet info"
+  command: aws ec2 describe-subnets --region {{ aws_region }}
+  register: subnet_info
+
+- name: "Debug raw subnet info"
+  debug:
+    var: subnet_info
+
+- name: "Debug parsed subnet info"
+  debug:
+    msg: "{{ subnet_info.stdout | from_json | json_query('Subnets[*].{CidrBlock:CidrBlock}') }}"
+
+- name: "Debug loop variable"
+  debug:
+    var: parsed_subnets
+  vars:
+    parsed_subnets: "{{ subnet_info.stdout | from_json | json_query('Subnets[*].{CidrBlock:CidrBlock}') }}"
+
+- name: "Delete subnets"
+  ec2_vpc_subnet:
+    profile: "{{ aws_vpc_delete.profile }}"
+    region: "{{ aws_region }}"
+    vpc_id: "{{ vpc_info.vpcs[0].id }}"
+    cidr: "{{ item.CidrBlock }}"
+    state: "absent"
+  loop: "{{ subnet_info.stdout | from_json | json_query('Subnets[*].{CidrBlock:CidrBlock}') }}"
+
+################################# igw  #####################
+
+
+- name: "Release Elastic IPs associated with the VPC"
+  ec2_eip:
+    profile: "{{ aws_vpc_delete.profile }}"
+    region: "{{ aws_vpc_delete.region }}"
+    state: absent
+    allocation_id: "{{ item.AllocationId }}"
+  with_items: "{{ eip_info.AllocationIds }}"
+  when: eip_info.AllocationIds is defined
+
+- name: "Disassociate public IPs from instances in the VPC"
+  amazon.aws.ec2_instance:
+    profile: "{{ aws_vpc_delete.profile }}"
+    region: "{{ aws_vpc_delete.region }}"
+    instance_ids: "{{ item.instance_id }}"
+    state: stopped
+  with_items: "{{ ec2_info.instances }}"
+  when: ec2_info.instances is defined
+
+- name: "Delete internet gateway"
+  ec2_vpc_igw:
+    profile: "{{ aws_vpc_delete.profile }}"
+    region: "{{ aws_vpc_delete.region }}"
+    vpc_id: "{{ item.vpc_id }}"
+    state: absent
+  with_items: "{{ vpc_info.vpcs }}"
+
+##############################################################
+
+
+
+
+################## sg  #Debug deletion !!! ######################
+
+- name: Gather VPCs
+  amazon.aws.ec2_vpc_net_info:
+    region: "{{ aws_region }}"
+  register: vpc_info
+
+- name: Debug VPCs information
+  debug:
+    var: vpc_info
+
+- name: Set VPC ID for VPC named 'lu_obelion'
+  set_fact:
+    vpc_id: "{{ item.vpc_id }}"
+  loop: "{{ vpc_info.vpcs }}"
+  when:
+    - item.state == 'available'
+    - item.tags is defined
+    - item.tags.Name is defined
+    - item.tags.Name == 'lu_obelion'
+
+- name: Debug VPC ID
+  debug:
+    var: vpc_id
+
+- name: Gather security groups for VPC
+  ec2_group_info:
+    region: "{{ aws_region }}"
+    filters:
+      "vpc-id": "{{ vpc_id }}"
+  register: security_groups_info
+
+- name: Debug security groups with VPC names
+  debug:
+    var: security_groups_info
+
+- name: Debug each security group
+  debug:
+    msg: "Security Group: {{ item.group_id }}, Tags: {{ item.tags }}"
+  loop: "{{ security_groups_info.security_groups }}"
+
+- name: Delete security groups in VPC
+  amazon.aws.ec2_group:
+    state: absent
+    region: "{{ aws_region }}"
+    group_id: "{{ item.group_id }}"
+  loop: "{{ security_groups_info.security_groups }}"
+  when:
+    - item.group_name != 'default'  # Skip the default security group
+    - item.tags is defined
+    - item.tags.Name is defined
+    - item.tags.Name == 'lu_obelion'
+  register: delete_security_group_results
+  failed_when: delete_security_group_results is failed
+
+- name: Debug deletion results
+  debug:
+    var: delete_security_group_results
+
+
+# - name: Delete security groups in the VPC
+#   amazon.aws.ec2_group:
+#     group_id: "{{ item }}"
+#     state: absent
+#     vpc_id: "{{ vpc_info.vpc.vpc.id }}" 
+#     region: "{{ aws_region }}"
+#   with_items:
+#     - "{{ vpc_info.public_sg.group_id }}"
+#     - "{{ vpc_info.private_sg.group_id }}"
+
+# - name: Delete security groups in the VPC
+#   amazon.aws.ec2_group:
+#     group_id: "{{ item }}"
+#     state: absent
+#     vpc_id: "{{ vpc_info.vpc.vpc.id }}" 
+#     region: "{{ aws_region }}"
+#   with_items:
+#     - "{{ vpc_info.public_sg.group_id }}"
+#     - "{{ vpc_info.private_sg.group_id }}"
+
+
+############################## RT  ######################################4
+
+
+
+# - name: Get route table ID from name
+#   amazon.aws.ec2_vpc_route_table_info:
+#     region: "{{ aws_region }}"
+#     filters:
+#       "tag:Name": "{{ route_table_name }}"
+#   register: route_table_info
+
+# - name: Delete route table if route_table_name is defined
+#   when: route_table_info.route_tables | length > 0
+#   amazon.aws.ec2_vpc_route_table:
+#     region: "{{ aws_region }}"
+#     vpc_id: "{{ vpc_info.vpcs[0].vpc_id }}"
+#     route_table_id: "{{ route_table_info.route_tables[0].route_table_id }}"
+#     state: absent
+
+
+
+################################## VPC ########################################
+
+
+- name: Debug VPC Info
+  debug:
+    var: vpc_info
+
+
+- name: Fetch VPC details
+  amazon.aws.ec2_vpc_net_info:
+    region: "{{ aws_region }}"
+  register: vpc_details
+
+- name: Debug VPC Details
+  debug:
+    var: vpc_details
+
+- name: Debug vpc_details.vpcs
+  debug:
+    var: vpc_details.vpcs
+
+- name: Find VPC ID by name
+  set_fact:
+    vpc_id: "{{ vpc_details.vpcs | selectattr('id', 'equalto', 'lu_obelion') | map(attribute='id') | first }}"
+  when: vpc_details.vpcs | selectattr('id', 'equalto', 'lu_obelion') | list | length > 0
+
+
+- name: Debug VPC Info
+  debug:
+    var: vpc_id
+
+
+- name: Terminate specific VPC
+  amazon.aws.ec2_vpc_net:
+    vpc_id: "{{ vpc_id }}"
+    state: absent
+    region: "{{ aws_region }}"
+  when: vpc_id is defined
+

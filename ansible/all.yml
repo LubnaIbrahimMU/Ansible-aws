@@ -1,6 +1,7 @@
 ---
 ec2_name: lu_gate
 aws_region: us-east-2
+vpc_name: "lu_obelion"
 az1: us-east-2a
 az2: us-east-2b
 key_name: lu3
@@ -23,7 +24,6 @@ aws_sub_info: "./data_resources/aws_sub_info.json"
 aws_info: "./data_resources/aws_info.json"
 aws_vpc_info: "./data_resources/aws_vpc_info.json"
 
-
 pub_rules:
   - proto: tcp
     ports:
@@ -42,10 +42,25 @@ pri_rules:
       - 443
     cidr_ip: 10.0.0.0/16
 
-    
+
 instance_id_paths:
   - roles/manage-linux-vm-aws/defaults/main.yml
   - roles/start-linux-vm-aws/defaults/main.yml
   - roles/re-start-linux-vm-aws/defaults/main.yml
   - roles/stop-linux-vm-aws/defaults/main.yml
   - roles/delete-linux-vm-aws/defaults/main.yml
+
+
+##### del ###
+
+aws_vpc_delete:
+  profile: "default" # Define your AWS profile here
+  region:  us-east-2
+
+
+
+route_table_name: "lu-public-rt"
+
+
+
+

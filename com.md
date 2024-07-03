@@ -10,6 +10,7 @@ ansible-playbook -i demo.aws_ec2.yml --private-key lu3  re-start-linux-vm-aws.ym
 
 ansible-playbook -i demo.aws_ec2.yml  delete-linux-vm-aws.yml -e "@all.yml"
 
+ansible-playbook delete-all-aws.yml -e "@all.yml"
 
 ansible-inventory -i demo.aws_ec2.yml --list
 ansible-inventory -i demo.aws_ec2.yml --graph

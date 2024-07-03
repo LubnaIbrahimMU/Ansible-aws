@@ -1,0 +1,24 @@
+---
+# tasks file for delete-disk-aws
+- name: Gather information about EBS volumes with a specific name
+  amazon.aws.ec2_vol_info:
+    filters:
+      "tag:Name": "{{ disk_name }}"
+    region: "{{ aws_region }}"
+  register: volume_info
+  tags: disk
+
+- name: Debug volume_info
+  debug:
+    var: volume_info
+  tags: debug
+
+- name: Delete EBS volumes
+  amazon.aws.ec2_vol:
+    id: "{{ item.id }}"
+    state: absent
+    region: "{{ aws_region }}"
+  loop: "{{ volume_info.volumes }}"
+  tags:
+    - delete_ebs_volume
+

@@ -1,0 +1,406 @@
+{
+    "internet_gateway": {
+        "changed": false,
+        "failed": false,
+        "gateway_id": "igw-091d87bcda31c0717",
+        "tags": {},
+        "vpc_id": "vpc-01c6012ae6bed690d"
+    },
+    "private_subnets": {
+        "changed": false,
+        "msg": "All items completed",
+        "results": [
+            {
+                "ansible_loop_var": "item",
+                "changed": false,
+                "failed": false,
+                "invocation": {
+                    "module_args": {
+                        "access_key": null,
+                        "assign_instances_ipv6": false,
+                        "aws_ca_bundle": null,
+                        "aws_config": null,
+                        "az": "us-east-2a",
+                        "cidr": "10.0.3.0/24",
+                        "debug_botocore_endpoint_logs": false,
+                        "endpoint_url": null,
+                        "ipv6_cidr": "",
+                        "map_public": false,
+                        "outpost_arn": "",
+                        "profile": null,
+                        "purge_tags": true,
+                        "region": "us-east-2",
+                        "secret_key": null,
+                        "session_token": null,
+                        "state": "present",
+                        "tags": null,
+                        "validate_certs": true,
+                        "vpc_id": "vpc-01c6012ae6bed690d",
+                        "wait": true,
+                        "wait_timeout": 300
+                    }
+                },
+                "item": {
+                    "az": "us-east-2a",
+                    "cidr": "10.0.3.0/24"
+                },
+                "subnet": {
+                    "assign_ipv6_address_on_creation": false,
+                    "availability_zone": "us-east-2a",
+                    "availability_zone_id": "use2-az1",
+                    "available_ip_address_count": 251,
+                    "cidr_block": "10.0.3.0/24",
+                    "default_for_az": false,
+                    "enable_dns64": false,
+                    "id": "subnet-02a462d6fff90f715",
+                    "ipv6_association_id": "",
+                    "ipv6_cidr_block": "",
+                    "ipv6_cidr_block_association_set": [],
+                    "ipv6_native": false,
+                    "map_customer_owned_ip_on_launch": false,
+                    "map_public_ip_on_launch": false,
+                    "owner_id": "654654330506",
+                    "private_dns_name_options_on_launch": {
+                        "enable_resource_name_dns_a_record": false,
+                        "enable_resource_name_dns_aaaa_record": false,
+                        "hostname_type": "ip-name"
+                    },
+                    "state": "available",
+                    "subnet_arn": "arn:aws:ec2:us-east-2:654654330506:subnet/subnet-02a462d6fff90f715",
+                    "tags": {},
+                    "vpc_id": "vpc-01c6012ae6bed690d"
+                }
+            },
+            {
+                "ansible_loop_var": "item",
+                "changed": false,
+                "failed": false,
+                "invocation": {
+                    "module_args": {
+                        "access_key": null,
+                        "assign_instances_ipv6": false,
+                        "aws_ca_bundle": null,
+                        "aws_config": null,
+                        "az": "us-east-2b",
+                        "cidr": "10.0.4.0/24",
+                        "debug_botocore_endpoint_logs": false,
+                        "endpoint_url": null,
+                        "ipv6_cidr": "",
+                        "map_public": false,
+                        "outpost_arn": "",
+                        "profile": null,
+                        "purge_tags": true,
+                        "region": "us-east-2",
+                        "secret_key": null,
+                        "session_token": null,
+                        "state": "present",
+                        "tags": null,
+                        "validate_certs": true,
+                        "vpc_id": "vpc-01c6012ae6bed690d",
+                        "wait": true,
+                        "wait_timeout": 300
+                    }
+                },
+                "item": {
+                    "az": "us-east-2b",
+                    "cidr": "10.0.4.0/24"
+                },
+                "subnet": {
+                    "assign_ipv6_address_on_creation": false,
+                    "availability_zone": "us-east-2b",
+                    "availability_zone_id": "use2-az2",
+                    "available_ip_address_count": 251,
+                    "cidr_block": "10.0.4.0/24",
+                    "default_for_az": false,
+                    "enable_dns64": false,
+                    "id": "subnet-0078e5a0cee8edbfe",
+                    "ipv6_association_id": "",
+                    "ipv6_cidr_block": "",
+                    "ipv6_cidr_block_association_set": [],
+                    "ipv6_native": false,
+                    "map_customer_owned_ip_on_launch": false,
+                    "map_public_ip_on_launch": false,
+                    "owner_id": "654654330506",
+                    "private_dns_name_options_on_launch": {
+                        "enable_resource_name_dns_a_record": false,
+                        "enable_resource_name_dns_aaaa_record": false,
+                        "hostname_type": "ip-name"
+                    },
+                    "state": "available",
+                    "subnet_arn": "arn:aws:ec2:us-east-2:654654330506:subnet/subnet-0078e5a0cee8edbfe",
+                    "tags": {},
+                    "vpc_id": "vpc-01c6012ae6bed690d"
+                }
+            }
+        ],
+        "skipped": false
+    },
+    "public_route_table": {
+        "changed": false,
+        "failed": false,
+        "route_table": {
+            "associations": [
+                {
+                    "association_state": {
+                        "state": "associated"
+                    },
+                    "main": false,
+                    "route_table_association_id": "rtbassoc-05650d45bc95b4a8e",
+                    "route_table_id": "rtb-0a828959ab5374bb1",
+                    "subnet_id": "subnet-00810a331b32b5bcf"
+                },
+                {
+                    "association_state": {
+                        "state": "associated"
+                    },
+                    "main": false,
+                    "route_table_association_id": "rtbassoc-0add6b195c58a3a26",
+                    "route_table_id": "rtb-0a828959ab5374bb1",
+                    "subnet_id": "subnet-06dbfad2ce37e5f08"
+                }
+            ],
+            "id": "rtb-0a828959ab5374bb1",
+            "owner_id": "654654330506",
+            "propagating_vgws": [],
+            "route_table_id": "rtb-0a828959ab5374bb1",
+            "routes": [
+                {
+                    "destination_cidr_block": "10.0.0.0/16",
+                    "gateway_id": "local",
+                    "origin": "CreateRouteTable",
+                    "state": "active"
+                },
+                {
+                    "destination_cidr_block": "0.0.0.0/0",
+                    "gateway_id": "igw-091d87bcda31c0717",
+                    "origin": "CreateRoute",
+                    "state": "active"
+                }
+            ],
+            "tags": {
+                "Name": "lu-public-rt"
+            },
+            "vpc_id": "vpc-01c6012ae6bed690d"
+        }
+    },
+    "public_subnets": {
+        "changed": false,
+        "msg": "All items completed",
+        "results": [
+            {
+                "ansible_loop_var": "item",
+                "changed": false,
+                "failed": false,
+                "invocation": {
+                    "module_args": {
+                        "access_key": null,
+                        "assign_instances_ipv6": false,
+                        "aws_ca_bundle": null,
+                        "aws_config": null,
+                        "az": "us-east-2a",
+                        "cidr": "10.0.1.0/24",
+                        "debug_botocore_endpoint_logs": false,
+                        "endpoint_url": null,
+                        "ipv6_cidr": "",
+                        "map_public": true,
+                        "outpost_arn": "",
+                        "profile": null,
+                        "purge_tags": true,
+                        "region": "us-east-2",
+                        "secret_key": null,
+                        "session_token": null,
+                        "state": "present",
+                        "tags": null,
+                        "validate_certs": true,
+                        "vpc_id": "vpc-01c6012ae6bed690d",
+                        "wait": true,
+                        "wait_timeout": 300
+                    }
+                },
+                "item": {
+                    "az": "us-east-2a",
+                    "cidr": "10.0.1.0/24"
+                },
+                "subnet": {
+                    "assign_ipv6_address_on_creation": false,
+                    "availability_zone": "us-east-2a",
+                    "availability_zone_id": "use2-az1",
+                    "available_ip_address_count": 251,
+                    "cidr_block": "10.0.1.0/24",
+                    "default_for_az": false,
+                    "enable_dns64": false,
+                    "id": "subnet-06dbfad2ce37e5f08",
+                    "ipv6_association_id": "",
+                    "ipv6_cidr_block": "",
+                    "ipv6_cidr_block_association_set": [],
+                    "ipv6_native": false,
+                    "map_customer_owned_ip_on_launch": false,
+                    "map_public_ip_on_launch": true,
+                    "owner_id": "654654330506",
+                    "private_dns_name_options_on_launch": {
+                        "enable_resource_name_dns_a_record": false,
+                        "enable_resource_name_dns_aaaa_record": false,
+                        "hostname_type": "ip-name"
+                    },
+                    "state": "available",
+                    "subnet_arn": "arn:aws:ec2:us-east-2:654654330506:subnet/subnet-06dbfad2ce37e5f08",
+                    "tags": {},
+                    "vpc_id": "vpc-01c6012ae6bed690d"
+                }
+            },
+            {
+                "ansible_loop_var": "item",
+                "changed": false,
+                "failed": false,
+                "invocation": {
+                    "module_args": {
+                        "access_key": null,
+                        "assign_instances_ipv6": false,
+                        "aws_ca_bundle": null,
+                        "aws_config": null,
+                        "az": "us-east-2b",
+                        "cidr": "10.0.2.0/24",
+                        "debug_botocore_endpoint_logs": false,
+                        "endpoint_url": null,
+                        "ipv6_cidr": "",
+                        "map_public": true,
+                        "outpost_arn": "",
+                        "profile": null,
+                        "purge_tags": true,
+                        "region": "us-east-2",
+                        "secret_key": null,
+                        "session_token": null,
+                        "state": "present",
+                        "tags": null,
+                        "validate_certs": true,
+                        "vpc_id": "vpc-01c6012ae6bed690d",
+                        "wait": true,
+                        "wait_timeout": 300
+                    }
+                },
+                "item": {
+                    "az": "us-east-2b",
+                    "cidr": "10.0.2.0/24"
+                },
+                "subnet": {
+                    "assign_ipv6_address_on_creation": false,
+                    "availability_zone": "us-east-2b",
+                    "availability_zone_id": "use2-az2",
+                    "available_ip_address_count": 251,
+                    "cidr_block": "10.0.2.0/24",
+                    "default_for_az": false,
+                    "enable_dns64": false,
+                    "id": "subnet-00810a331b32b5bcf",
+                    "ipv6_association_id": "",
+                    "ipv6_cidr_block": "",
+                    "ipv6_cidr_block_association_set": [],
+                    "ipv6_native": false,
+                    "map_customer_owned_ip_on_launch": false,
+                    "map_public_ip_on_launch": true,
+                    "owner_id": "654654330506",
+                    "private_dns_name_options_on_launch": {
+                        "enable_resource_name_dns_a_record": false,
+                        "enable_resource_name_dns_aaaa_record": false,
+                        "hostname_type": "ip-name"
+                    },
+                    "state": "available",
+                    "subnet_arn": "arn:aws:ec2:us-east-2:654654330506:subnet/subnet-00810a331b32b5bcf",
+                    "tags": {},
+                    "vpc_id": "vpc-01c6012ae6bed690d"
+                }
+            }
+        ],
+        "skipped": false
+    },
+    "region": "us-east-2",
+    "security_group": {
+        "changed": false,
+        "description": "Public subnet security group",
+        "failed": false,
+        "group_id": "sg-0c8cca8a0a3513311",
+        "group_name": "lpublic_sg",
+        "ip_permissions": [
+            {
+                "from_port": 80,
+                "ip_protocol": "tcp",
+                "ip_ranges": [
+                    {
+                        "cidr_ip": "0.0.0.0/0"
+                    }
+                ],
+                "ipv6_ranges": [],
+                "prefix_list_ids": [],
+                "to_port": 80,
+                "user_id_group_pairs": []
+            },
+            {
+                "from_port": 22,
+                "ip_protocol": "tcp",
+                "ip_ranges": [
+                    {
+                        "cidr_ip": "0.0.0.0/0"
+                    }
+                ],
+                "ipv6_ranges": [],
+                "prefix_list_ids": [],
+                "to_port": 22,
+                "user_id_group_pairs": []
+            },
+            {
+                "from_port": 443,
+                "ip_protocol": "tcp",
+                "ip_ranges": [
+                    {
+                        "cidr_ip": "0.0.0.0/0"
+                    }
+                ],
+                "ipv6_ranges": [],
+                "prefix_list_ids": [],
+                "to_port": 443,
+                "user_id_group_pairs": []
+            }
+        ],
+        "ip_permissions_egress": [
+            {
+                "ip_protocol": "-1",
+                "ip_ranges": [
+                    {
+                        "cidr_ip": "0.0.0.0/0"
+                    }
+                ],
+                "ipv6_ranges": [],
+                "prefix_list_ids": [],
+                "user_id_group_pairs": []
+            }
+        ],
+        "owner_id": "654654330506",
+        "tags": {},
+        "vpc_id": "vpc-01c6012ae6bed690d"
+    },
+    "vpc": {
+        "changed": false,
+        "failed": false,
+        "vpc": {
+            "cidr_block": "10.0.0.0/16",
+            "cidr_block_association_set": [
+                {
+                    "association_id": "vpc-cidr-assoc-0008561746d790f2a",
+                    "cidr_block": "10.0.0.0/16",
+                    "cidr_block_state": {
+                        "state": "associated"
+                    }
+                }
+            ],
+            "dhcp_options_id": "dopt-087295bb20f40973e",
+            "id": "vpc-01c6012ae6bed690d",
+            "instance_tenancy": "default",
+            "is_default": false,
+            "name": "lu_obelion",
+            "owner_id": "654654330506",
+            "state": "available",
+            "tags": {
+                "Name": "lu_obelion"
+            }
+        }
+    }
+}

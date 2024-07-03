@@ -1,0 +1,4 @@
+---
+# vars file for delete-disk-aws
+disk_name: G-data
+aws_region: us-east-2

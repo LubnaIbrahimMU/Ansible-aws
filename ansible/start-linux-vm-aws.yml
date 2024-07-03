@@ -1,0 +1,6 @@
+- name: EC2 start
+  hosts: localhost
+  roles:
+    - start-linux-vm-aws
+  tags:
+    - start

@@ -1,0 +1,42 @@
+---
+
+- name: Create VPC, subnets, and SG on AWS
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  roles:
+    - create-network-aws
+  tags: 
+    - vpc
+
+
+- name: create-linux-vm-aws
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  roles:
+    - create-linux-vm-aws
+  tags: 
+    - ec2
+
+
+
+- name: configure-linux-vm-aws
+  hosts: tag_Name_{{ ec2_name }}
+  remote_user: ubuntu
+  become: yes
+  become_method: sudo
+  vars:
+    ansible_ssh_common_args: "-o StrictHostKeyChecking=no"
+  roles: 
+   - configure-linux-vm-aws
+  tags: 
+    - vol
+
+
+- name: check instance in aws
+  hosts: localhost
+  gather_facts: false
+  roles:
+    - check-linux-vm-aws
+  tags: ec2_info

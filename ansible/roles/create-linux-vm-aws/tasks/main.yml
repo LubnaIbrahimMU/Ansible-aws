@@ -1,0 +1,136 @@
+---
+# tasks file for create-linux-vm-aws
+
+- name: Read AWS information from file
+  slurp:
+    src: "{{ aws_info }}"
+  register: aws_info_file
+
+- name: Set AWS information fact for EC2 role
+  set_fact:
+    vpc_info: "{{ aws_info_file['content'] | b64decode | from_json }}"
+
+- name: Print AWS information
+  debug:
+    var: aws_info_file
+
+
+# - name: Read public_subnets  from file
+#   slurp:
+#     src: "{{ aws_sub_info  }}"
+#   register: subnet_info
+
+# - name: Set security group ID fact for EC2 role
+#   set_fact:
+#    subnet_info: "{{ subnet_info['content'] | b64decode | from_json }}"
+
+# - name: Print subnets information
+#   debug:
+#     var: subnet_info
+
+
+
+- name: Check if key.pem file exists
+  stat:
+    path: "{{ key_name }}"
+  register: key_file
+
+# Create the key pair if the key.pem file doesn't exist
+- name: Create Key Pair
+  ec2_key:
+    name: "{{ key_name }}"
+    region: "{{ aws_region }}"
+  register: key_pair
+  when: not key_file.stat.exists
+
+# Save the private key locally if the key pair was created
+- name: Save Private Key Locally
+  copy:
+    content: "{{ key_pair.key.private_key }}"
+    dest: "{{ key_name }}"
+    mode: 0400
+  when:
+    - key_pair is defined
+    - key_pair.changed
+
+# Create EC2 instance
+- name: Create EC2 instance
+  amazon.aws.ec2_instance:
+    key_name: "{{ key_name }}"
+    instance_type: "{{ ec2_instance_type }}"
+    image_id: "{{ ec2_ami }}"
+    region: "{{ aws_region }}"
+    wait: True
+    count: 1
+    security_groups: "{{ public_sg.group_id }}"
+    vpc_subnet_id: "{{ public_subnets.results[0].subnet.id }}" 
+    network:
+      assign_public_ip: True
+    tags:
+      Name: "{{ ec2_name }}"
+      Environment: Production
+  register: ec2_instance
+  tags: ec2_up
+
+- name: Print instance IP
+  debug:
+    msg: "WordPress URL: http://{{ ec2_instance.instances[0].public_dns_name }}"
+
+- name: Add instance to dynamic inventory
+  add_host:
+    name: "{{ ec2_instance.instances[0].public_dns_name }}"
+    groups: tag_Name_{{ ec2_name }}
+    instance_id: "{{ ec2_instance.instance_ids[0] }}"
+    ansible_host: "{{ ec2_instance.instances[0].public_dns_name }}"
+    ansible_user: ubuntu
+    ansible_ssh_private_key_file: "{{ key_name }}"
+
+
+
+- name: Write Instance ID to multiple files
+  lineinfile:
+    path: "{{ item }}"
+    regexp: '^Instance_ID:'
+    line: "Instance_ID: {{ ec2_instance.instance_ids[0] }}"
+    create: yes
+  loop: "{{ instance_id_paths }}"
+
+- name: Pause for 30 seconds before retrieving volume information
+  ansible.builtin.pause:
+    seconds: 30
+
+- name: Create EC2 volume
+  amazon.aws.ec2_vol:
+    volume_size: "{{ v_size }}"  
+    volume_type: "{{ v_type}}" 
+    region: "{{ aws_region }}"
+    instance: "{{ ec2_instance.instance_ids[0] }}" 
+    device_name:  "{{ dev_name }}" 
+    name:   "{{ disk_name }}" 
+    delete_on_termination: true   
+    tags:
+      purpose: "{{ purpose }}"
+    state: present
+  register: ec2_volume
+  tags: disk_up
+
+- name: Pause for 20 seconds
+  ansible.builtin.pause:
+    seconds: 20
+
+- name: Get EC2 volume details
+  delegate_to: localhost
+  amazon.aws.ec2_vol_info:
+    region: "{{ aws_region }}"
+    filters:
+      attachment.status: attached
+  register: ec2_vol_info
+
+
+- name: Save ec2_volume information to file
+  copy:
+    content: "{{ ec2_vol_info | to_nice_json }}"
+    dest: "{{ ec2_volume_info }}"
+  tags: disk_info
+
+

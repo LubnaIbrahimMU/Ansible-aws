@@ -1,0 +1,57 @@
+---
+# tasks file for manage-linux-vm-aws
+
+
+- name: Stop EC2 instance
+  amazon.aws.ec2_instance:
+    instance_ids: "{{ Instance_ID }}"
+    region: "{{ aws_region}}"
+    state: stopped
+  tags:
+    - stop
+
+- name: Start EC2 instance
+  amazon.aws.ec2_instance:
+    instance_ids: "{{ Instance_ID }}"
+    region: "{{ aws_region}}"
+    state: running
+  tags: 
+    - start
+
+
+- name: Terminate EC2 instance
+  amazon.aws.ec2_instance:
+    instance_ids: "{{ Instance_ID }}"
+    region: "{{ aws_region}}"
+    state: absent
+  tags:
+    - terminate
+
+
+
+
+
+- name: Restart EC2 instance
+  block:
+    - name: Stop EC2 instance for restart
+      amazon.aws.ec2_instance:
+        instance_ids: "{{ Instance_ID }}"
+        region: "{{ aws_region }}"
+        state: stopped
+
+    - name: Wait for EC2 instance to stop
+      amazon.aws.ec2_instance_info:
+        instance_ids: "{{ Instance_ID }}"
+        region: "{{ aws_region }}"
+      register: ec2_info
+      until: ec2_info.instances[0].state.name == "stopped"
+      retries: 10
+      delay: 30
+
+    - name: Start EC2 instance for restart
+      amazon.aws.ec2_instance:
+        instance_ids: "{{ Instance_ID }}"
+        region: "{{ aws_region }}"
+        state: running
+  tags:
+    - restart

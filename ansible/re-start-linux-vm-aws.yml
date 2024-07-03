@@ -1,0 +1,6 @@
+- name: EC2 re_start
+  hosts: localhost
+  roles:
+    - re-start-linux-vm-aws
+  tags:
+    - restart

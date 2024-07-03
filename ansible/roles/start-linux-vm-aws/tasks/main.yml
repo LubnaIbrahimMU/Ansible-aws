@@ -1,0 +1,9 @@
+---
+# tasks file for start-linux-vm-aws
+- name: Start EC2 instance
+  amazon.aws.ec2_instance:
+    instance_ids: "{{ Instance_ID }}"
+    region: "{{ aws_region}}"
+    state: running
+  tags: 
+    - start

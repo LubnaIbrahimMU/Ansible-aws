@@ -1,0 +1,16 @@
+---
+# tasks file for check-linux-vm-aws
+
+
+- name: Gather AWS instance information
+  amazon.aws.ec2_instance_info:
+    region: "{{ aws_region }}"
+    filters:
+      "tag:Name": "{{ ec2_name }}"
+      # instance-id: "{{ instance_id }}"
+  register: aws_instance_info
+
+- name: Save AWS instance information to file
+  copy:
+    content: "{{ aws_instance_info | to_nice_json }}"
+    dest: "{{ instance_info }}"

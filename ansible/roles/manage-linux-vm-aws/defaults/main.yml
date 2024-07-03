@@ -1,0 +1,4 @@
+---
+# defaults file for manage-linux-vm-aws
+Instance_ID: i-0f15df626b07794c7
+aws_region: us-east-2

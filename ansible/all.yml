@@ -1,0 +1,33 @@
+---
+ec2_name: lu_gate
+aws_region: us-east-2
+az1: us-east-2a
+az2: us-east-2b
+key_name: lu3
+ec2_instance_type: t3.small
+ec2_ami: ami-09040d770ffe2224f    ## for us-east-2 ubuntu 22.04
+# ec2_ami: ami-04b70fa74e45c3917  ## for us-east-1 ubuntu 22.04
+v_type: gp3
+v_size: 20
+mount_point: /data
+purpose: application_data
+dev_name: /dev/sdf
+disk_name: G-data
+user_name: cloud_gate
+user_password: passwd
+ssh_pub_key_path: "/home/lu/.ssh/aws_ec2_key.pub"
+ec2_volume_info: "./data_resources/ec2_volume_info.json"
+instance_info: "./data_resources/instance_info.json"
+sg_info: "./data_resources/sg.json"
+aws_sub_info: "./data_resources/aws_sub_info.json"
+aws_info: "./data_resources/aws_info.json"
+aws_vpc_info: "./data_resources/aws_vpc_info.json"
+
+
+
+instance_id_paths:
+  - roles/manage-linux-vm-aws/defaults/main.yml
+  - roles/start-linux-vm-aws/defaults/main.yml
+  - roles/re-start-linux-vm-aws/defaults/main.yml
+  - roles/stop-linux-vm-aws/defaults/main.yml
+  - roles/delete-linux-vm-aws/defaults/main.yml

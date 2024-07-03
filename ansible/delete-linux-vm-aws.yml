@@ -1,0 +1,7 @@
+
+- name: EC2 terminate
+  hosts: localhost
+  roles:
+    - delete-linux-vm-aws
+  tags:
+    - terminate

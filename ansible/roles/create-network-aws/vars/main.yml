@@ -1,0 +1,11 @@
+---
+# vars file for create-network-aws
+
+
+aws_region: us-east-2
+az1: us-east-2a
+az2: us-east-2b
+aws_vpc_info: "/home/lu/Downloads/abi1/0gate0/ansible/data_resources/aws_vpc_info.json"
+sg_info: "/home/lu/Downloads/abi1/0gate0/ansible/data_resources/sg.json"   
+aws_sub_info: "/home/lu/Downloads/abi1/0gate0/ansible/data_resources/aws_sub_info.json"
+aws_info: "/home/lu/Downloads/abi1/0gate0/ansible/data_resources/aws_info.json"

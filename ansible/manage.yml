@@ -1,0 +1,25 @@
+
+- name: EC2 manage
+  hosts: localhost
+  roles:
+    - manage-linux-vm-aws
+  # tags:
+  #   - ec2 
+
+
+# - name: EC2 manage
+#   hosts: localhost
+#   roles:
+#     - delete-disk-aws
+#   tags:
+#     - volume
+
+
+
+# - name: EC2 manage
+#   hosts: localhost
+#   roles:
+#     - delete-all-aws
+#   tags:
+#     - vpc
+

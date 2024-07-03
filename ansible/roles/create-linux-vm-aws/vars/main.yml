@@ -1,0 +1,27 @@
+---
+# vars file for create-linux-vm-aws
+
+
+key_name: lu3
+ec2_instance_type: t3.small
+ec2_ami: ami-09040d770ffe2224f    ## for us-east-2 ubuntu 22.04
+# ec2_ami: ami-04b70fa74e45c3917  ## for us-east-1 ubuntu 22.04
+aws_region: us-east-2
+ec2_name: lu_gate
+v_type: gp3
+v_size: 20
+purpose: application_data
+dev_name: /dev/sdf
+disk_name: G-data
+ec2_volume_info: "/home/lu/Downloads/abi1/0gate0/ansible/data_resources/ec2_volume_info.json"
+instance_info: "/home/lu/Downloads/abi1/0gate0/ansible/data_resources/instance_info.json"
+sg_info: "/home/lu/Downloads/abi1/0gate0/ansible/data_resources/sg.json"
+aws_sub_info: "/home/lu/Downloads/abi1/0gate0/ansible/data_resources/aws_sub_info.json"
+aws_info: "/home/lu/Downloads/abi1/0gate0/ansible/data_resources/aws_info.json"
+
+instance_id_paths:
+  - roles/manage-linux-vm-aws/defaults/main.yml
+  - roles/start-linux-vm-aws/defaults/main.yml
+  - roles/re-start-linux-vm-aws/defaults/main.yml
+  - roles/stop-linux-vm-aws/defaults/main.yml
+  - roles/delete-linux-vm-aws/defaults/main.yml

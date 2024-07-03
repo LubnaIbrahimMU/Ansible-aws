@@ -1,0 +1,4 @@
+- name: Volume detach and delete
+  hosts: localhost
+  roles:
+    - delete-all-aws

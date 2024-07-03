@@ -1,0 +1,7 @@
+---
+# vars file for configure-linux-vm-aws
+
+user_name: cloud_gate
+user_password: passwd
+ssh_pub_key_path: "/home/lu/.ssh/aws_ec2_key.pub"
+mount_point: /data

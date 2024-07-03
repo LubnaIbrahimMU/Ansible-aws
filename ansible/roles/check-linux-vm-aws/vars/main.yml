@@ -1,0 +1,5 @@
+---
+# vars file for check-linux-vm-aws
+instance_info: "/home/lu/Downloads/abi1/0gate0/instance_info.json"
+aws_region: us-east-2
+ec2_name: lu_gate

@@ -1,0 +1,6 @@
+- name: EC2 stop
+  hosts: localhost
+  roles:
+    - stop-linux-vm-aws
+  tags:
+    - stop

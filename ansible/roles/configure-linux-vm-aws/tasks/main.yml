@@ -1,0 +1,78 @@
+---
+# tasks file for configure-linux-vm-aws
+
+
+- name: Create a mount point
+  become: true
+  file:
+    path: /data
+    state: directory
+
+- name: Run lsblk command to find the additional disk
+  shell: lsblk -o NAME,SIZE,MOUNTPOINT | awk '$3=="" && $2=="{{ v_size }}G" {print $1}'
+  register: blk_device_name
+
+- name: Display the result
+  debug:
+    var: blk_device_name.stdout_lines[0] | replace('"', '')
+
+- name: Create a partition on nvme1n1
+  become: true
+  parted:
+    device: "/dev/{{ blk_device_name.stdout_lines[0] }}"
+    number: 1
+    label: gpt
+    state: present
+    fs_type: ext4
+  tags: partition
+
+- name: Get the partition name
+  command: "lsblk -nr -o NAME /dev/{{ blk_device_name.stdout_lines[0] }}"
+  register: partition_info
+
+- name: Format the first partition
+  become: true
+  filesystem:
+    fstype: ext4
+    dev: "/dev/{{ partition_info.stdout_lines[1] }}"
+  tags: format
+
+- name: Mount the partition
+  mount:
+    path: /data
+    src:  "/dev/{{ partition_info.stdout_lines[1] }}"
+    fstype: ext4
+    state: mounted
+  become: true
+
+- name: Add the mount to /etc/fstab
+  become: true
+  lineinfile:
+    path: /etc/fstab
+    line: "/dev/{{ partition_info.stdout_lines[1] }} /data ext4 defaults 0 0"
+
+- name: Mount additional disk to /data
+  become: true
+  ansible.builtin.mount:
+    path: "/data"
+    src: "/dev/{{ partition_info.stdout_lines[1] }}"
+    fstype: ext4
+    state: mounted
+
+
+- name: "Create User"
+  become: true
+  user:
+    name: "{{ user_name }}"
+    password: "{{ user_password  | password_hash('sha512') }}"
+    groups: "sudo"
+    createhome: yes
+    shell: "/bin/bash"
+  tags: create_user
+
+- name: Add SSH Key for the User
+  become: true
+  authorized_key:
+    user: "{{ user_name }}"
+    key: "{{ lookup('file', ssh_pub_key_path)}}"
+  tags: ssh_user

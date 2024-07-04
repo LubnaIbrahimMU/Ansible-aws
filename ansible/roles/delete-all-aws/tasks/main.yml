@@ -205,20 +205,20 @@
 
 
 
-# - name: Get route table ID from name
-#   amazon.aws.ec2_vpc_route_table_info:
-#     region: "{{ aws_region }}"
-#     filters:
-#       "tag:Name": "{{ route_table_name }}"
-#   register: route_table_info
+- name: Get route table ID from name
+  amazon.aws.ec2_vpc_route_table_info:
+    region: "{{ aws_region }}"
+    filters:
+      "tag:Name": "{{ route_table_name }}"
+  register: route_table_info
 
-# - name: Delete route table if route_table_name is defined
-#   when: route_table_info.route_tables | length > 0
-#   amazon.aws.ec2_vpc_route_table:
-#     region: "{{ aws_region }}"
-#     vpc_id: "{{ vpc_info.vpcs[0].vpc_id }}"
-#     route_table_id: "{{ route_table_info.route_tables[0].route_table_id }}"
-#     state: absent
+- name: Delete route table if route_table_name is defined
+  when: route_table_info.route_tables | length > 0
+  amazon.aws.ec2_vpc_route_table:
+    region: "{{ aws_region }}"
+    vpc_id: "{{ vpc_info.vpcs[0].vpc_id }}"
+    route_table_id: "{{ route_table_info.route_tables[0].route_table_id }}"
+    state: absent
 
 
 

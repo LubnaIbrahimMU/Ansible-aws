@@ -1,5 +1,7 @@
 ansible-playbook -i demo.aws_ec2.yml --private-key lu3  gate.yml -e "@all.yml" 
 
+ansible-playbook -i demo.aws_ec2.yml --private-key lu3  gate.yml -e "@all.yml" --tags=laravel
+
 ansible-playbook -i demo.aws_ec2.yml --private-key lu3  gate.yml -e "@all.yml" --tags=vol
 
 ansible-playbook -i demo.aws_ec2.yml --private-key lu3  stop-linux-vm-aws.yml -e "@all.yml"
@@ -22,3 +24,7 @@ ssh-keygen -t rsa -b 4096  -f ~/.ssh/lana
 # for user ssh 
 
 ssh cloud_gate@<public_ip>  ##get it from /data_resources/instance_info.json
+
+php artisan key:generate  ## ec2 key-test 
+
+nginx -t

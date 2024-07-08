@@ -7,7 +7,7 @@ This project provides a streamlined approach to setting up and managing AWS infr
 * Before starting the project, ensure you add your SSH public key path (ssh_pub_key_path) in the Ansible configuration variable file called all.yml
 
 
-## * Creating VPC, Linux ubuntu vm with a secondary data disk and configuring it run :
+## * Creating VPC, Linux ubuntu vm with a secondary data disk and configuring it with laravel configuration run :
 
 ```
 ansible-playbook -i demo.aws_ec2.yml --private-key lu3  gate.yml -e "@all.yml" 

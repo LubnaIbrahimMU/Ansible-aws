@@ -2,9 +2,9 @@
     "internet_gateway": {
         "changed": false,
         "failed": false,
-        "gateway_id": "igw-091d87bcda31c0717",
+        "gateway_id": "igw-087bb81735e36c438",
         "tags": {},
-        "vpc_id": "vpc-01c6012ae6bed690d"
+        "vpc_id": "vpc-0b130709e9c0e662f"
     },
     "private_subnets": {
         "changed": false,
@@ -35,7 +35,7 @@
                         "state": "present",
                         "tags": null,
                         "validate_certs": true,
-                        "vpc_id": "vpc-01c6012ae6bed690d",
+                        "vpc_id": "vpc-0b130709e9c0e662f",
                         "wait": true,
                         "wait_timeout": 300
                     }
@@ -52,7 +52,7 @@
                     "cidr_block": "10.0.3.0/24",
                     "default_for_az": false,
                     "enable_dns64": false,
-                    "id": "subnet-02a462d6fff90f715",
+                    "id": "subnet-01426db57cecf84f2",
                     "ipv6_association_id": "",
                     "ipv6_cidr_block": "",
                     "ipv6_cidr_block_association_set": [],
@@ -66,9 +66,9 @@
                         "hostname_type": "ip-name"
                     },
                     "state": "available",
-                    "subnet_arn": "arn:aws:ec2:us-east-2:654654330506:subnet/subnet-02a462d6fff90f715",
+                    "subnet_arn": "arn:aws:ec2:us-east-2:654654330506:subnet/subnet-01426db57cecf84f2",
                     "tags": {},
-                    "vpc_id": "vpc-01c6012ae6bed690d"
+                    "vpc_id": "vpc-0b130709e9c0e662f"
                 }
             },
             {
@@ -96,7 +96,7 @@
                         "state": "present",
                         "tags": null,
                         "validate_certs": true,
-                        "vpc_id": "vpc-01c6012ae6bed690d",
+                        "vpc_id": "vpc-0b130709e9c0e662f",
                         "wait": true,
                         "wait_timeout": 300
                     }
@@ -113,7 +113,7 @@
                     "cidr_block": "10.0.4.0/24",
                     "default_for_az": false,
                     "enable_dns64": false,
-                    "id": "subnet-0078e5a0cee8edbfe",
+                    "id": "subnet-09764fcdea56abd9a",
                     "ipv6_association_id": "",
                     "ipv6_cidr_block": "",
                     "ipv6_cidr_block_association_set": [],
@@ -127,9 +127,9 @@
                         "hostname_type": "ip-name"
                     },
                     "state": "available",
-                    "subnet_arn": "arn:aws:ec2:us-east-2:654654330506:subnet/subnet-0078e5a0cee8edbfe",
+                    "subnet_arn": "arn:aws:ec2:us-east-2:654654330506:subnet/subnet-09764fcdea56abd9a",
                     "tags": {},
-                    "vpc_id": "vpc-01c6012ae6bed690d"
+                    "vpc_id": "vpc-0b130709e9c0e662f"
                 }
             }
         ],
@@ -145,24 +145,24 @@
                         "state": "associated"
                     },
                     "main": false,
-                    "route_table_association_id": "rtbassoc-05650d45bc95b4a8e",
-                    "route_table_id": "rtb-0a828959ab5374bb1",
-                    "subnet_id": "subnet-00810a331b32b5bcf"
+                    "route_table_association_id": "rtbassoc-06e82f4a89f2356b8",
+                    "route_table_id": "rtb-085c4906402ab09af",
+                    "subnet_id": "subnet-09d80cf876432d030"
                 },
                 {
                     "association_state": {
                         "state": "associated"
                     },
                     "main": false,
-                    "route_table_association_id": "rtbassoc-0add6b195c58a3a26",
-                    "route_table_id": "rtb-0a828959ab5374bb1",
-                    "subnet_id": "subnet-06dbfad2ce37e5f08"
+                    "route_table_association_id": "rtbassoc-04c372a63b8ae4940",
+                    "route_table_id": "rtb-085c4906402ab09af",
+                    "subnet_id": "subnet-0dd7753059809c7ed"
                 }
             ],
-            "id": "rtb-0a828959ab5374bb1",
+            "id": "rtb-085c4906402ab09af",
             "owner_id": "654654330506",
             "propagating_vgws": [],
-            "route_table_id": "rtb-0a828959ab5374bb1",
+            "route_table_id": "rtb-085c4906402ab09af",
             "routes": [
                 {
                     "destination_cidr_block": "10.0.0.0/16",
@@ -172,7 +172,7 @@
                 },
                 {
                     "destination_cidr_block": "0.0.0.0/0",
-                    "gateway_id": "igw-091d87bcda31c0717",
+                    "gateway_id": "igw-087bb81735e36c438",
                     "origin": "CreateRoute",
                     "state": "active"
                 }
@@ -180,7 +180,7 @@
             "tags": {
                 "Name": "lu-public-rt"
             },
-            "vpc_id": "vpc-01c6012ae6bed690d"
+            "vpc_id": "vpc-0b130709e9c0e662f"
         }
     },
     "public_subnets": {
@@ -212,7 +212,7 @@
                         "state": "present",
                         "tags": null,
                         "validate_certs": true,
-                        "vpc_id": "vpc-01c6012ae6bed690d",
+                        "vpc_id": "vpc-0b130709e9c0e662f",
                         "wait": true,
                         "wait_timeout": 300
                     }
@@ -229,7 +229,7 @@
                     "cidr_block": "10.0.1.0/24",
                     "default_for_az": false,
                     "enable_dns64": false,
-                    "id": "subnet-06dbfad2ce37e5f08",
+                    "id": "subnet-0dd7753059809c7ed",
                     "ipv6_association_id": "",
                     "ipv6_cidr_block": "",
                     "ipv6_cidr_block_association_set": [],
@@ -243,9 +243,9 @@
                         "hostname_type": "ip-name"
                     },
                     "state": "available",
-                    "subnet_arn": "arn:aws:ec2:us-east-2:654654330506:subnet/subnet-06dbfad2ce37e5f08",
+                    "subnet_arn": "arn:aws:ec2:us-east-2:654654330506:subnet/subnet-0dd7753059809c7ed",
                     "tags": {},
-                    "vpc_id": "vpc-01c6012ae6bed690d"
+                    "vpc_id": "vpc-0b130709e9c0e662f"
                 }
             },
             {
@@ -273,7 +273,7 @@
                         "state": "present",
                         "tags": null,
                         "validate_certs": true,
-                        "vpc_id": "vpc-01c6012ae6bed690d",
+                        "vpc_id": "vpc-0b130709e9c0e662f",
                         "wait": true,
                         "wait_timeout": 300
                     }
@@ -290,7 +290,7 @@
                     "cidr_block": "10.0.2.0/24",
                     "default_for_az": false,
                     "enable_dns64": false,
-                    "id": "subnet-00810a331b32b5bcf",
+                    "id": "subnet-09d80cf876432d030",
                     "ipv6_association_id": "",
                     "ipv6_cidr_block": "",
                     "ipv6_cidr_block_association_set": [],
@@ -304,79 +304,132 @@
                         "hostname_type": "ip-name"
                     },
                     "state": "available",
-                    "subnet_arn": "arn:aws:ec2:us-east-2:654654330506:subnet/subnet-00810a331b32b5bcf",
+                    "subnet_arn": "arn:aws:ec2:us-east-2:654654330506:subnet/subnet-09d80cf876432d030",
                     "tags": {},
-                    "vpc_id": "vpc-01c6012ae6bed690d"
+                    "vpc_id": "vpc-0b130709e9c0e662f"
                 }
             }
         ],
         "skipped": false
     },
     "region": "us-east-2",
-    "security_group": {
-        "changed": false,
-        "description": "Public subnet security group",
-        "failed": false,
-        "group_id": "sg-0c8cca8a0a3513311",
-        "group_name": "lpublic_sg",
-        "ip_permissions": [
-            {
-                "from_port": 80,
-                "ip_protocol": "tcp",
-                "ip_ranges": [
-                    {
-                        "cidr_ip": "0.0.0.0/0"
-                    }
-                ],
-                "ipv6_ranges": [],
-                "prefix_list_ids": [],
-                "to_port": 80,
-                "user_id_group_pairs": []
-            },
-            {
-                "from_port": 22,
-                "ip_protocol": "tcp",
-                "ip_ranges": [
-                    {
-                        "cidr_ip": "0.0.0.0/0"
-                    }
-                ],
-                "ipv6_ranges": [],
-                "prefix_list_ids": [],
-                "to_port": 22,
-                "user_id_group_pairs": []
-            },
-            {
-                "from_port": 443,
-                "ip_protocol": "tcp",
-                "ip_ranges": [
-                    {
-                        "cidr_ip": "0.0.0.0/0"
-                    }
-                ],
-                "ipv6_ranges": [],
-                "prefix_list_ids": [],
-                "to_port": 443,
-                "user_id_group_pairs": []
-            }
-        ],
-        "ip_permissions_egress": [
-            {
-                "ip_protocol": "-1",
-                "ip_ranges": [
-                    {
-                        "cidr_ip": "0.0.0.0/0"
-                    }
-                ],
-                "ipv6_ranges": [],
-                "prefix_list_ids": [],
-                "user_id_group_pairs": []
-            }
-        ],
-        "owner_id": "654654330506",
-        "tags": {},
-        "vpc_id": "vpc-01c6012ae6bed690d"
-    },
+    "security_groups": [
+        {
+            "changed": false,
+            "description": "Public subnet security group",
+            "failed": false,
+            "group_id": "sg-06fa9e24a30f8e983",
+            "group_name": "lpublic_sg",
+            "ip_permissions": [
+                {
+                    "from_port": 80,
+                    "ip_protocol": "tcp",
+                    "ip_ranges": [
+                        {
+                            "cidr_ip": "0.0.0.0/0"
+                        }
+                    ],
+                    "ipv6_ranges": [],
+                    "prefix_list_ids": [],
+                    "to_port": 80,
+                    "user_id_group_pairs": []
+                },
+                {
+                    "from_port": 22,
+                    "ip_protocol": "tcp",
+                    "ip_ranges": [
+                        {
+                            "cidr_ip": "0.0.0.0/0"
+                        }
+                    ],
+                    "ipv6_ranges": [],
+                    "prefix_list_ids": [],
+                    "to_port": 22,
+                    "user_id_group_pairs": []
+                },
+                {
+                    "from_port": 443,
+                    "ip_protocol": "tcp",
+                    "ip_ranges": [
+                        {
+                            "cidr_ip": "0.0.0.0/0"
+                        }
+                    ],
+                    "ipv6_ranges": [],
+                    "prefix_list_ids": [],
+                    "to_port": 443,
+                    "user_id_group_pairs": []
+                }
+            ],
+            "ip_permissions_egress": [
+                {
+                    "ip_protocol": "-1",
+                    "ip_ranges": [
+                        {
+                            "cidr_ip": "0.0.0.0/0"
+                        }
+                    ],
+                    "ipv6_ranges": [],
+                    "prefix_list_ids": [],
+                    "user_id_group_pairs": []
+                }
+            ],
+            "owner_id": "654654330506",
+            "tags": {},
+            "vpc_id": "vpc-0b130709e9c0e662f"
+        },
+        {
+            "changed": false,
+            "description": "Private subnet security group",
+            "failed": false,
+            "group_id": "sg-04113df11ca822ef8",
+            "group_name": "lprivate_sg",
+            "ip_permissions": [
+                {
+                    "from_port": 80,
+                    "ip_protocol": "tcp",
+                    "ip_ranges": [
+                        {
+                            "cidr_ip": "10.0.0.0/16"
+                        }
+                    ],
+                    "ipv6_ranges": [],
+                    "prefix_list_ids": [],
+                    "to_port": 80,
+                    "user_id_group_pairs": []
+                },
+                {
+                    "from_port": 443,
+                    "ip_protocol": "tcp",
+                    "ip_ranges": [
+                        {
+                            "cidr_ip": "10.0.0.0/16"
+                        }
+                    ],
+                    "ipv6_ranges": [],
+                    "prefix_list_ids": [],
+                    "to_port": 443,
+                    "user_id_group_pairs": []
+                }
+            ],
+            "ip_permissions_egress": [
+                {
+                    "ip_protocol": "-1",
+                    "ip_ranges": [
+                        {
+                            "cidr_ip": "0.0.0.0/0"
+                        }
+                    ],
+                    "ipv6_ranges": [],
+                    "prefix_list_ids": [],
+                    "user_id_group_pairs": []
+                }
+            ],
+            "owner_id": "654654330506",
+            "tags": {},
+            "vpc_id": "vpc-0b130709e9c0e662f"
+        }
+    ],
     "vpc": {
         "changed": false,
         "failed": false,
@@ -384,7 +437,7 @@
             "cidr_block": "10.0.0.0/16",
             "cidr_block_association_set": [
                 {
-                    "association_id": "vpc-cidr-assoc-0008561746d790f2a",
+                    "association_id": "vpc-cidr-assoc-0bee125224d558b7c",
                     "cidr_block": "10.0.0.0/16",
                     "cidr_block_state": {
                         "state": "associated"
@@ -392,7 +445,7 @@
                 }
             ],
             "dhcp_options_id": "dopt-087295bb20f40973e",
-            "id": "vpc-01c6012ae6bed690d",
+            "id": "vpc-0b130709e9c0e662f",
             "instance_tenancy": "default",
             "is_default": false,
             "name": "lu_obelion",

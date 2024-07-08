@@ -1,0 +1,382 @@
+---
+# tasks file for configure-laravel-aws
+
+- name: Update apt cache
+  apt:
+    update_cache: yes
+
+- name: Ensure python MySQL package is installed on Ubuntu
+  package:
+    name: python3-mysqldb
+    state: present
+  when: ansible_distribution == 'Ubuntu'
+
+- name: Add repository for PHP 8.2
+  apt_repository:
+    repo: ppa:ondrej/php
+    state: present
+
+- name: Update apt cache after adding PHP repository
+  apt:
+    update_cache: yes
+
+
+# - name: Install PHP extensions
+#   apt:
+#     name:
+#       - php{{ php_version }}-xml
+#       - php{{ php_version }}-dom
+#     state: present
+#   notify:
+#     - Restart PHP-FPM
+
+
+- name: Install required packages
+  apt:
+    name:
+      - nginx
+      - php{{ php_version }}
+      - php{{ php_version }}-fpm
+      - php{{ php_version }}-mysql
+      - php{{ php_version }}-xml
+      - php{{ php_version }}-dom          
+      - php{{ php_version }}-cli
+      - git
+      - unzip
+      - curl
+      - mysql-server
+    state: present
+  notify:
+    - Restart PHP-FPM
+
+
+
+- name: Start and enable Nginx
+  service:
+    name: nginx
+    state: started
+    enabled: yes
+
+- name: Start and enable PHP-FPM
+  service:
+    name: php{{ php_version }}-fpm
+    state: started
+    enabled: yes
+
+- name: Create .my.cnf file
+  template:
+    src: my.cnf.j2
+    dest: ~/.my.cnf
+    owner: root
+    group: root
+    mode: '0600'
+  notify: Restart MySQL
+
+- name: Removes anonymous user account for localhost
+  mysql_user:
+    name: ''
+    host: localhost
+    login_user: root
+    login_password: "{{ mysql_root_password }}"
+    state: absent
+    column_case_sensitive: false 
+    login_unix_socket: /run/mysqld/mysqld.sock
+
+- name: Removes all anonymous user accounts
+  mysql_user:
+    name: ''
+    host_all: true
+    login_user: root
+    login_password: "{{ mysql_root_password }}"
+    state: absent
+    column_case_sensitive: false 
+
+- name: Create MySQL database
+  mysql_db:
+    name: "{{ mysql_database }}"
+    state: present
+
+- name: Create MySQL user
+  mysql_user:
+    name: "{{ mysql_user }}"
+    password: "{{ mysql_password }}"
+    priv: "{{ mysql_database }}.*:ALL"
+    state: present
+    column_case_sensitive: false
+
+
+
+- name: download composer installer
+  get_url:
+    url: https://getcomposer.org/installer
+    dest: /tmp/composer
+
+- name: install composer
+  shell: php /tmp/composer --install-dir=/usr/local/bin
+
+
+- name: rename composer executable
+  shell: mv /usr/local/bin/composer.phar /usr/local/bin/composer
+
+
+- name: set permissions for composer file
+  file:
+    path: /usr/local/bin/composer
+    mode: a+x
+    state: file
+
+
+
+- name: Ensure the Laravel directory is marked safe by Git
+  command: git config --global --add safe.directory "{{ app_root }}"
+
+- name: Clone Laravel application
+  git:
+    repo: "{{ app_repo }}"
+    dest: "{{ app_root }}"
+    force: yes
+ 
+
+
+- name: Set permissions for Laravel
+  file:
+    path: "{{ app_root }}"
+    owner: www-data
+    group: www-data
+    state: directory
+    mode: '0755'
+    recurse: yes
+
+
+
+
+- name: Check if composer.json exists
+  stat:
+    path: /var/www/laravel/composer.json
+  register: composer_json_exists
+
+
+
+- name: Install Laravel dependencies
+  composer:
+    command: install
+    working_dir: "{{ app_root }}"
+  environment:
+    COMPOSER_ALLOW_SUPERUSER: "1"
+  become: true
+  become_user: root
+
+
+
+- name: Copy .env file
+  template:
+    src: .env.j2
+    dest: "{{ app_root }}/.env"
+    owner: www-data
+    group: www-data
+    mode: '0666'    ## it was '0644'  but the key needs '0666'
+
+
+
+- name: Set permissions for storage and bootstrap/cache directories
+  file:
+    path: "{{ app_root }}/{{ item }}"
+    owner: www-data
+    group: www-data
+    mode: '0775'          
+    recurse: yes
+  with_items:
+    - storage
+    - bootstrap/cache
+
+- name: Debug before generating APP_KEY
+  debug:
+    msg: "About to run php artisan key:generate"
+
+
+
+- name: Generate Laravel APP_KEY
+  shell: |
+    cd "{{ app_root }}"
+    php artisan key:generate --no-interaction
+  args:
+    chdir: "{{ app_root }}"
+
+- name: Debug after generating APP_KEY
+  debug:
+    msg: "Finished running php artisan key:generate"
+
+
+- name: Configure Nginx
+  template:
+    src: nginx.conf.j2
+    dest: /etc/nginx/sites-available/{{ app_name }}
+
+- name: Enable Nginx site
+  file:
+    src: /etc/nginx/sites-available/{{ app_name }}
+    dest: /etc/nginx/sites-enabled/{{ app_name }}
+    state: link
+
+- name: Remove default Nginx site
+  file:
+    path: /etc/nginx/sites-enabled/default
+    state: absent
+
+- name: Restart Nginx after configuration changes
+  service:
+    name: nginx
+    state: restarted
+
+
+
+- name: Check Nginx configuration syntax
+  command: nginx -t
+  register: nginx_test
+  ignore_errors: true
+
+- name: Fail if Nginx configuration syntax is invalid
+  fail:
+    msg: "Nginx configuration syntax is invalid"
+  when: nginx_test.rc != 0
+
+
+
+
+
+
+
+
+#########################################          testing                         ####################################   key testing 
+
+
+
+# - name: Clear Laravel Configuration Cache
+#   command: php artisan config:clear
+#   args:
+#     chdir: "{{ app_root }}"
+#   become: true
+#   become_user: root
+
+# - name: Adjust Permissions for Testing (Temporary) - storage directory
+#   file:
+#     path: "{{ app_root }}/storage"
+#     mode: "0777"
+#     recurse: yes
+#   become: true
+#   become_user: root
+
+# - name: Adjust Permissions for Testing (Temporary) - .env file
+#   file:
+#     path: "{{ app_root }}/.env"
+#     mode: "0666"
+#     owner: www-data
+#     group: www-data
+#   become: true
+#   become_user: root
+
+
+# - name: Restart Nginx after adjusting permissions
+#   service:
+#     name: nginx
+#     state: restarted
+
+# - name: Restart PHP-FPM after adjusting permissions
+#   service:
+#     name: php{{ php_version }}-fpm
+#     state: restarted
+
+
+# - name: Debug before generating APP_KEY
+#   debug:
+#     msg: "About to run php artisan key:generate"
+
+
+
+# - name: Generate Laravel APP_KEY
+#   shell: |
+#     cd "{{ app_root }}"
+#     php artisan key:generate --no-interaction
+#   args:
+#     chdir: "{{ app_root }}"
+
+# - name: Debug after generating APP_KEY
+#   debug:
+#     msg: "Finished running php artisan key:generate"
+
+
+
+
+################################### Logs ############################################ check 
+
+
+- name: Run database migrations
+  shell: |
+    cd "{{ app_root }}"
+    php artisan migrate --force
+  args:
+    chdir: "{{ app_root }}"
+
+
+- name: Check if Laravel artisan exists
+  stat:
+    path: /var/www/laravel/artisan
+  register: artisan_file
+
+- name: Clear Laravel cache if artisan exists
+  command: php /var/www/laravel/artisan cache:clear
+  when: artisan_file.stat.exists
+
+- name: Cache Laravel configuration if artisan exists
+  command: php /var/www/laravel/artisan config:cache
+  when: artisan_file.stat.exists
+
+- name: Print debug information
+  debug:
+    msg: "{{ artisan_file }}"
+
+
+- name: Check Nginx error log
+  command: tail -n 50 /var/log/nginx/error.log
+  register: nginx_error_log
+  changed_when: false
+  ignore_errors: true
+  notify: Notify error log
+
+- name: Check PHP-FPM error log
+  command: tail -n 50 /var/log/php{{ php_version }}-fpm.log
+  register: php_fpm_error_log
+  changed_when: false
+  ignore_errors: true
+  notify: Notify PHP-FPM error log
+
+- name: Check Laravel log
+  command: tail -n 50 {{ app_root }}/storage/logs/laravel.log
+  register: laravel_log
+  changed_when: false
+  ignore_errors: true
+  notify: Notify Laravel log
+
+- name: Print Nginx error log
+  debug:
+    var: nginx_error_log.stdout_lines
+
+- name: Print PHP-FPM error log
+  debug:
+    var: php_fpm_error_log.stdout_lines
+
+- name: Print Laravel log
+  debug:
+    var: laravel_log.stdout_lines
+
+
+
+- name: Restart Nginx after configuration changes
+  service:
+    name: nginx
+    state: restarted
+  notify: Restart PHP-FPM
+
+##################### ******
+
+

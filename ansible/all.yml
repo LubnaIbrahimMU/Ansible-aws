@@ -63,4 +63,18 @@ route_table_name: "lu-public-rt"
 
 
 
+############################################### laravel-aws #######################################
 
+# Default variables for laravel role
+app_name: laravel_app
+app_repo: 'https://github.com/laravel/laravel.git'      
+# app_repo: 'https://github.com/themeselection/sneat-bootstrap-html-laravel-admin-template-free.git'   
+app_root: /var/www/laravel
+php_version: '8.2'
+mysql_root_password: pass@123#
+mysql_database: wordpressapp
+mysql_user: lu
+mysql_password: pass@123
+# server_name: lu_gate
+db_host: 127.0.0.1
+server_name: 18.223.125.99   ## Note don't write, it will be add  automatically

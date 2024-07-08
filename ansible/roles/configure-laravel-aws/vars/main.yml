@@ -1,0 +1,13 @@
+---
+# vars file for configure-laravel-aws
+
+# # Default variables for laravel role
+# app_name: laravel_app
+# app_repo: 'https://github.com/LubnaIbrahimMU/abi-WordPress.git'  
+# app_root: /var/www/laravel
+# php_version: '8.1'
+# mysql_root_password: root_password
+# mysql_database: laravel
+# mysql_user: laravel_user
+# mysql_password: laravel_password
+# server_name: example.com ec2 ip de lu-db

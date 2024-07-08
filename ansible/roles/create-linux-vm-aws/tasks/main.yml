@@ -95,6 +95,19 @@
     create: yes
   loop: "{{ instance_id_paths }}"
 
+
+- name: Set Instance Public IP
+  set_fact:
+    instance_ip: "{{ ec2_instance.instances[0].public_ip_address }}"
+
+- name: Write Instance IP to file
+  lineinfile:
+    path: ./all.yml
+    regexp: '^server_name:'
+    line: "server_name: {{ instance_ip }}"
+    create: yes
+
+
 - name: Pause for 30 seconds before retrieving volume information
   ansible.builtin.pause:
     seconds: 30

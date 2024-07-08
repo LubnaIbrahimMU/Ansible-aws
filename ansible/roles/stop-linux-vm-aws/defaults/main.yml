@@ -1,4 +1,4 @@
 ---
 # defaults file for stop-linux-vm-aws
-Instance_ID: i-0f15df626b07794c7
+Instance_ID: i-02a6f2d27c7e8d9ed
 aws_region: us-east-2

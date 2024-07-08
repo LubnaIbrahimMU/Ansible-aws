@@ -1,0 +1,40 @@
+---
+# handlers file for configure-laravel-aws
+
+- name: Restart MySQL
+  service:
+    name: mysql
+    state: restarted
+
+
+
+- name: Restart Nginx
+  service:
+    name: nginx
+    state: restarted
+
+
+- name: Restart PHP-FPM
+  service:
+    name: php{{ php_version }}-fpm
+    state: restarted
+
+
+
+- name: Notify error log
+  debug:
+    msg: "Check the error logs for more details."
+
+- name: Notify PHP-FPM error log
+  debug:
+    msg: "Check the PHP-FPM error logs for more details."
+
+
+
+- name: Notify error log
+  debug:
+    msg: "Check the Nginx error log for details: {{ nginx_error_log.stdout }}"
+
+- name: Notify PHP-FPM error log
+  debug:
+    msg: "Check the PHP-FPM error log for details: {{ php_fpm_error_log.stdout }}"

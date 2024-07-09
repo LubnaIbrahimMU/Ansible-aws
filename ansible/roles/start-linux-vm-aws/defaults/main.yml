@@ -1,4 +1,4 @@
 ---
 # defaults file for start-linux-vm-aws
-Instance_ID: i-0ae6aee66d6bc1392
+Instance_ID: i-01b6344716feda39e
 aws_region: us-east-2

@@ -269,6 +269,14 @@
 ################################### Logs ############################################ check ## if needed 
 
 
+- name: Link the storage for more accessibility
+  shell: |
+    cd "{{ app_root }}"
+    php artisan storage:link
+  args:
+    chdir: "{{ app_root }}"
+
+
 - name: Run database migrations
   shell: |
     cd "{{ app_root }}"
@@ -294,12 +302,11 @@
   debug:
     msg: "{{ artisan_file }}"
 
-- name: Cache Laravel config
-  ansible.builtin.command:
-    cmd: php artisan config:cache
-  args:
-    chdir: /var/www/laravel
-
+# - name: Cache Laravel config
+#   ansible.builtin.command:
+#     cmd: php artisan config:cache
+#   args:
+#     chdir: /var/www/laravel
 
 - name: Check Nginx error log
   command: tail -n 50 /var/log/nginx/error.log
@@ -339,4 +346,4 @@
   service:
     name: nginx
     state: restarted
-  notify: Restart PHP-FPM
+  notify: Restart PHP-FPM 

@@ -77,4 +77,4 @@ mysql_user: lu
 mysql_password: pass@123
 # server_name: lu_gate
 db_host: 127.0.0.1
-server_name: 3.149.234.179
+server_name: 18.225.117.3

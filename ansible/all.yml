@@ -5,7 +5,7 @@ vpc_name: "lu_obelion"
 az1: us-east-2a
 az2: us-east-2b
 key_name: lu3
-ec2_instance_type: t3.small
+ec2_instance_type: t3.medium
 ec2_ami: ami-09040d770ffe2224f    ## for us-east-2 ubuntu 22.04
 # ec2_ami: ami-04b70fa74e45c3917  ## for us-east-1 ubuntu 22.04
 v_type: gp3
@@ -77,4 +77,4 @@ mysql_user: lu
 mysql_password: pass@123
 # server_name: lu_gate
 db_host: 127.0.0.1
-server_name: 18.223.125.99   ## Note don't write, it will be add  automatically
+server_name: 3.149.234.179

@@ -21,16 +21,6 @@
     update_cache: yes
 
 
-# - name: Install PHP extensions
-#   apt:
-#     name:
-#       - php{{ php_version }}-xml
-#       - php{{ php_version }}-dom
-#     state: present
-#   notify:
-#     - Restart PHP-FPM
-
-
 - name: Install required packages
   apt:
     name:
@@ -63,6 +53,8 @@
     state: started
     enabled: yes
 
+
+############################### MYSQL ##############################33
 - name: Create .my.cnf file
   template:
     src: my.cnf.j2
@@ -104,6 +96,8 @@
     state: present
     column_case_sensitive: false
 
+
+################################# laravel ###########################
 
 
 - name: download composer installer
@@ -183,28 +177,57 @@
     path: "{{ app_root }}/{{ item }}"
     owner: www-data
     group: www-data
-    mode: '0775'          
+    mode: '0777'          ## it was '0775'  but the key needs '0777'
     recurse: yes
   with_items:
     - storage
     - bootstrap/cache
 
-- name: Debug before generating APP_KEY
-  debug:
-    msg: "About to run php artisan key:generate"
+
+####  Generate key didn't work wz me plz if it works wz you tell me how! 
+
+# - name: Generate a new Laravel application key
+#   ansible.builtin.command:
+#     cmd: php artisan key:generate
+#   args:
+#     chdir: /var/www/laravel
+
+# - name: Generate Laravel APP_KEY
+#   shell: |
+#     php artisan key:generate
+#   args:
+#     chdir: "{{ app_root }}"
+#   register: keygen_output
+
+# - name: Generate app key
+#   command: php {{ app_root }}/artisan key:generate
+#   tags: [ 'laravel', 'key' ]
 
 
 
-- name: Generate Laravel APP_KEY
-  shell: |
-    cd "{{ app_root }}"
-    php artisan key:generate --no-interaction
+##################### lu key --force ######################
+
+
+- name: Generate a random key
+  ansible.builtin.set_fact:
+    lu_key: "{{ lookup('password', '/dev/null length=32 chars=ascii_letters,digits') }}"
+
+
+- name: Set key in .env file
+  ansible.builtin.lineinfile:
+    path: "{{ app_root }}/.env"
+    regexp: ^APP_KEY=
+    line: "APP_KEY={{ lu_key }}"
+    owner: www-data
+    group: www-data
+    mode: '0666'
+
+
+- name: Clear Laravel config cache
+  ansible.builtin.command:
+    cmd: php artisan config:clear
   args:
-    chdir: "{{ app_root }}"
-
-- name: Debug after generating APP_KEY
-  debug:
-    msg: "Finished running php artisan key:generate"
+    chdir: /var/www/laravel
 
 
 - name: Configure Nginx
@@ -243,71 +266,7 @@
 
 
 
-
-
-
-
-#########################################          testing                         ####################################   key testing 
-
-
-
-# - name: Clear Laravel Configuration Cache
-#   command: php artisan config:clear
-#   args:
-#     chdir: "{{ app_root }}"
-#   become: true
-#   become_user: root
-
-# - name: Adjust Permissions for Testing (Temporary) - storage directory
-#   file:
-#     path: "{{ app_root }}/storage"
-#     mode: "0777"
-#     recurse: yes
-#   become: true
-#   become_user: root
-
-# - name: Adjust Permissions for Testing (Temporary) - .env file
-#   file:
-#     path: "{{ app_root }}/.env"
-#     mode: "0666"
-#     owner: www-data
-#     group: www-data
-#   become: true
-#   become_user: root
-
-
-# - name: Restart Nginx after adjusting permissions
-#   service:
-#     name: nginx
-#     state: restarted
-
-# - name: Restart PHP-FPM after adjusting permissions
-#   service:
-#     name: php{{ php_version }}-fpm
-#     state: restarted
-
-
-# - name: Debug before generating APP_KEY
-#   debug:
-#     msg: "About to run php artisan key:generate"
-
-
-
-# - name: Generate Laravel APP_KEY
-#   shell: |
-#     cd "{{ app_root }}"
-#     php artisan key:generate --no-interaction
-#   args:
-#     chdir: "{{ app_root }}"
-
-# - name: Debug after generating APP_KEY
-#   debug:
-#     msg: "Finished running php artisan key:generate"
-
-
-
-
-################################### Logs ############################################ check 
+################################### Logs ############################################ check ## if needed 
 
 
 - name: Run database migrations
@@ -334,6 +293,12 @@
 - name: Print debug information
   debug:
     msg: "{{ artisan_file }}"
+
+- name: Cache Laravel config
+  ansible.builtin.command:
+    cmd: php artisan config:cache
+  args:
+    chdir: /var/www/laravel
 
 
 - name: Check Nginx error log
@@ -370,13 +335,8 @@
     var: laravel_log.stdout_lines
 
 
-
 - name: Restart Nginx after configuration changes
   service:
     name: nginx
     state: restarted
   notify: Restart PHP-FPM
-
-##################### ******
-
-

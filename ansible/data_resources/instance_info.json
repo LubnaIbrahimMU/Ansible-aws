@@ -5,31 +5,12 @@
         {
             "ami_launch_index": 0,
             "architecture": "x86_64",
-            "block_device_mappings": [
-                {
-                    "device_name": "/dev/sda1",
-                    "ebs": {
-                        "attach_time": "2024-07-08T06:24:26+00:00",
-                        "delete_on_termination": true,
-                        "status": "attached",
-                        "volume_id": "vol-01e820b3af46e91f3"
-                    }
-                },
-                {
-                    "device_name": "/dev/sdf",
-                    "ebs": {
-                        "attach_time": "2024-07-08T06:25:19+00:00",
-                        "delete_on_termination": true,
-                        "status": "attached",
-                        "volume_id": "vol-0d338b1d2b578ea80"
-                    }
-                }
-            ],
+            "block_device_mappings": [],
             "boot_mode": "uefi-preferred",
             "capacity_reservation_specification": {
                 "capacity_reservation_preference": "open"
             },
-            "client_token": "c83dd8d36b3b49ea86c4b7d199a708fb",
+            "client_token": "9bc15493e45c4fa9bf6c6ea215d40ced",
             "cpu_options": {
                 "core_count": 1,
                 "threads_per_core": 2
@@ -45,10 +26,173 @@
             },
             "hypervisor": "xen",
             "image_id": "ami-09040d770ffe2224f",
-            "instance_id": "i-02a6f2d27c7e8d9ed",
-            "instance_type": "t3.small",
+            "instance_id": "i-066154037b817b872",
+            "instance_type": "t3.medium",
             "key_name": "lu3",
-            "launch_time": "2024-07-08T06:24:26+00:00",
+            "launch_time": "2024-07-09T02:49:20+00:00",
+            "maintenance_options": {
+                "auto_recovery": "default"
+            },
+            "metadata_options": {
+                "http_endpoint": "enabled",
+                "http_protocol_ipv6": "disabled",
+                "http_put_response_hop_limit": 2,
+                "http_tokens": "required",
+                "instance_metadata_tags": "disabled",
+                "state": "pending"
+            },
+            "monitoring": {
+                "state": "disabled"
+            },
+            "network_interfaces": [],
+            "placement": {
+                "availability_zone": "us-east-2a",
+                "group_name": "",
+                "tenancy": "default"
+            },
+            "platform_details": "Linux/UNIX",
+            "private_dns_name": "",
+            "product_codes": [],
+            "public_dns_name": "",
+            "root_device_name": "/dev/sda1",
+            "root_device_type": "ebs",
+            "security_groups": [],
+            "state": {
+                "code": 48,
+                "name": "terminated"
+            },
+            "state_reason": {
+                "code": "Client.UserInitiatedShutdown",
+                "message": "Client.UserInitiatedShutdown: User initiated shutdown"
+            },
+            "state_transition_reason": "User initiated (2024-07-09 03:08:16 GMT)",
+            "tags": {
+                "Environment": "Production",
+                "Name": "lu_gate"
+            },
+            "usage_operation": "RunInstances",
+            "usage_operation_update_time": "2024-07-09T02:49:20+00:00",
+            "virtualization_type": "hvm"
+        },
+        {
+            "ami_launch_index": 0,
+            "architecture": "x86_64",
+            "block_device_mappings": [],
+            "boot_mode": "uefi-preferred",
+            "capacity_reservation_specification": {
+                "capacity_reservation_preference": "open"
+            },
+            "client_token": "d4a2c430476349d2b97c6ca454867e7b",
+            "cpu_options": {
+                "core_count": 4,
+                "threads_per_core": 2
+            },
+            "current_instance_boot_mode": "uefi",
+            "ebs_optimized": false,
+            "ena_support": true,
+            "enclave_options": {
+                "enabled": false
+            },
+            "hibernation_options": {
+                "configured": false
+            },
+            "hypervisor": "xen",
+            "image_id": "ami-09040d770ffe2224f",
+            "instance_id": "i-049b5e4697570f1fb",
+            "instance_type": "t3.2xlarge",
+            "key_name": "lu3",
+            "launch_time": "2024-07-09T00:52:08+00:00",
+            "maintenance_options": {
+                "auto_recovery": "default"
+            },
+            "metadata_options": {
+                "http_endpoint": "enabled",
+                "http_protocol_ipv6": "disabled",
+                "http_put_response_hop_limit": 2,
+                "http_tokens": "required",
+                "instance_metadata_tags": "disabled",
+                "state": "pending"
+            },
+            "monitoring": {
+                "state": "disabled"
+            },
+            "network_interfaces": [],
+            "placement": {
+                "availability_zone": "us-east-2a",
+                "group_name": "",
+                "tenancy": "default"
+            },
+            "platform_details": "Linux/UNIX",
+            "private_dns_name": "",
+            "product_codes": [],
+            "public_dns_name": "",
+            "root_device_name": "/dev/sda1",
+            "root_device_type": "ebs",
+            "security_groups": [],
+            "state": {
+                "code": 48,
+                "name": "terminated"
+            },
+            "state_reason": {
+                "code": "Client.UserInitiatedShutdown",
+                "message": "Client.UserInitiatedShutdown: User initiated shutdown"
+            },
+            "state_transition_reason": "User initiated (2024-07-09 02:37:30 GMT)",
+            "tags": {
+                "Environment": "Production",
+                "Name": "lu_gate"
+            },
+            "usage_operation": "RunInstances",
+            "usage_operation_update_time": "2024-07-09T00:52:08+00:00",
+            "virtualization_type": "hvm"
+        },
+        {
+            "ami_launch_index": 0,
+            "architecture": "x86_64",
+            "block_device_mappings": [
+                {
+                    "device_name": "/dev/sda1",
+                    "ebs": {
+                        "attach_time": "2024-07-09T03:09:00+00:00",
+                        "delete_on_termination": true,
+                        "status": "attached",
+                        "volume_id": "vol-0b94643b106afcada"
+                    }
+                },
+                {
+                    "device_name": "/dev/sdf",
+                    "ebs": {
+                        "attach_time": "2024-07-09T03:09:53+00:00",
+                        "delete_on_termination": true,
+                        "status": "attached",
+                        "volume_id": "vol-0dc5c4ec464492ec1"
+                    }
+                }
+            ],
+            "boot_mode": "uefi-preferred",
+            "capacity_reservation_specification": {
+                "capacity_reservation_preference": "open"
+            },
+            "client_token": "914ee8e7d0464492bd0dadec0ffb0c41",
+            "cpu_options": {
+                "core_count": 1,
+                "threads_per_core": 2
+            },
+            "current_instance_boot_mode": "uefi",
+            "ebs_optimized": false,
+            "ena_support": true,
+            "enclave_options": {
+                "enabled": false
+            },
+            "hibernation_options": {
+                "configured": false
+            },
+            "hypervisor": "xen",
+            "image_id": "ami-09040d770ffe2224f",
+            "instance_id": "i-0ae6aee66d6bc1392",
+            "instance_type": "t3.medium",
+            "key_name": "lu3",
+            "launch_time": "2024-07-09T03:09:00+00:00",
             "maintenance_options": {
                 "auto_recovery": "default"
             },
@@ -67,12 +211,12 @@
                 {
                     "association": {
                         "ip_owner_id": "amazon",
-                        "public_dns_name": "ec2-18-223-125-99.us-east-2.compute.amazonaws.com",
-                        "public_ip": "18.223.125.99"
+                        "public_dns_name": "ec2-3-149-234-179.us-east-2.compute.amazonaws.com",
+                        "public_ip": "3.149.234.179"
                     },
                     "attachment": {
-                        "attach_time": "2024-07-08T06:24:26+00:00",
-                        "attachment_id": "eni-attach-04f35d248d0e6f6a5",
+                        "attach_time": "2024-07-09T03:09:00+00:00",
+                        "attachment_id": "eni-attach-03fb4d60795f4b06c",
                         "delete_on_termination": true,
                         "device_index": 0,
                         "network_card_index": 0,
@@ -87,21 +231,21 @@
                     ],
                     "interface_type": "interface",
                     "ipv6_addresses": [],
-                    "mac_address": "02:97:ca:bd:f4:b3",
-                    "network_interface_id": "eni-072dd858924af399e",
+                    "mac_address": "02:39:cb:fb:d8:27",
+                    "network_interface_id": "eni-0ecf99f39b9041228",
                     "owner_id": "654654330506",
-                    "private_dns_name": "ip-10-0-1-147.us-east-2.compute.internal",
-                    "private_ip_address": "10.0.1.147",
+                    "private_dns_name": "ip-10-0-1-54.us-east-2.compute.internal",
+                    "private_ip_address": "10.0.1.54",
                     "private_ip_addresses": [
                         {
                             "association": {
                                 "ip_owner_id": "amazon",
-                                "public_dns_name": "ec2-18-223-125-99.us-east-2.compute.amazonaws.com",
-                                "public_ip": "18.223.125.99"
+                                "public_dns_name": "ec2-3-149-234-179.us-east-2.compute.amazonaws.com",
+                                "public_ip": "3.149.234.179"
                             },
                             "primary": true,
-                            "private_dns_name": "ip-10-0-1-147.us-east-2.compute.internal",
-                            "private_ip_address": "10.0.1.147"
+                            "private_dns_name": "ip-10-0-1-54.us-east-2.compute.internal",
+                            "private_ip_address": "10.0.1.54"
                         }
                     ],
                     "source_dest_check": true,
@@ -116,16 +260,16 @@
                 "tenancy": "default"
             },
             "platform_details": "Linux/UNIX",
-            "private_dns_name": "ip-10-0-1-147.us-east-2.compute.internal",
+            "private_dns_name": "ip-10-0-1-54.us-east-2.compute.internal",
             "private_dns_name_options": {
                 "enable_resource_name_dns_a_record": false,
                 "enable_resource_name_dns_aaaa_record": false,
                 "hostname_type": "ip-name"
             },
-            "private_ip_address": "10.0.1.147",
+            "private_ip_address": "10.0.1.54",
             "product_codes": [],
-            "public_dns_name": "ec2-18-223-125-99.us-east-2.compute.amazonaws.com",
-            "public_ip_address": "18.223.125.99",
+            "public_dns_name": "ec2-3-149-234-179.us-east-2.compute.amazonaws.com",
+            "public_ip_address": "3.149.234.179",
             "root_device_name": "/dev/sda1",
             "root_device_type": "ebs",
             "security_groups": [
@@ -146,7 +290,7 @@
                 "Name": "lu_gate"
             },
             "usage_operation": "RunInstances",
-            "usage_operation_update_time": "2024-07-08T06:24:26+00:00",
+            "usage_operation_update_time": "2024-07-09T03:09:00+00:00",
             "virtualization_type": "hvm",
             "vpc_id": "vpc-0b130709e9c0e662f"
         },
@@ -158,7 +302,7 @@
             "capacity_reservation_specification": {
                 "capacity_reservation_preference": "open"
             },
-            "client_token": "0823068fae594d48b980615ebfba523a",
+            "client_token": "2b509cf1b8d0411e92af98ef9c5a24bf",
             "cpu_options": {
                 "core_count": 1,
                 "threads_per_core": 2
@@ -174,10 +318,10 @@
             },
             "hypervisor": "xen",
             "image_id": "ami-09040d770ffe2224f",
-            "instance_id": "i-016f63c014d86b182",
-            "instance_type": "t3.small",
+            "instance_id": "i-0cf74f9c8675a1d31",
+            "instance_type": "t3.medium",
             "key_name": "lu3",
-            "launch_time": "2024-07-08T06:12:17+00:00",
+            "launch_time": "2024-07-09T02:38:31+00:00",
             "maintenance_options": {
                 "auto_recovery": "default"
             },
@@ -213,157 +357,13 @@
                 "code": "Client.UserInitiatedShutdown",
                 "message": "Client.UserInitiatedShutdown: User initiated shutdown"
             },
-            "state_transition_reason": "User initiated (2024-07-08 06:22:56 GMT)",
+            "state_transition_reason": "User initiated (2024-07-09 02:48:40 GMT)",
             "tags": {
                 "Environment": "Production",
                 "Name": "lu_gate"
             },
             "usage_operation": "RunInstances",
-            "usage_operation_update_time": "2024-07-08T06:12:17+00:00",
-            "virtualization_type": "hvm"
-        },
-        {
-            "ami_launch_index": 0,
-            "architecture": "x86_64",
-            "block_device_mappings": [],
-            "boot_mode": "uefi-preferred",
-            "capacity_reservation_specification": {
-                "capacity_reservation_preference": "open"
-            },
-            "client_token": "f64bbefe2f9d40f7b6f1803d1b125498",
-            "cpu_options": {
-                "core_count": 1,
-                "threads_per_core": 2
-            },
-            "current_instance_boot_mode": "uefi",
-            "ebs_optimized": false,
-            "ena_support": true,
-            "enclave_options": {
-                "enabled": false
-            },
-            "hibernation_options": {
-                "configured": false
-            },
-            "hypervisor": "xen",
-            "image_id": "ami-09040d770ffe2224f",
-            "instance_id": "i-07969da949de8e73e",
-            "instance_type": "t3.small",
-            "key_name": "lu3",
-            "launch_time": "2024-07-08T05:15:33+00:00",
-            "maintenance_options": {
-                "auto_recovery": "default"
-            },
-            "metadata_options": {
-                "http_endpoint": "enabled",
-                "http_protocol_ipv6": "disabled",
-                "http_put_response_hop_limit": 2,
-                "http_tokens": "required",
-                "instance_metadata_tags": "disabled",
-                "state": "pending"
-            },
-            "monitoring": {
-                "state": "disabled"
-            },
-            "network_interfaces": [],
-            "placement": {
-                "availability_zone": "us-east-2a",
-                "group_name": "",
-                "tenancy": "default"
-            },
-            "platform_details": "Linux/UNIX",
-            "private_dns_name": "",
-            "product_codes": [],
-            "public_dns_name": "",
-            "root_device_name": "/dev/sda1",
-            "root_device_type": "ebs",
-            "security_groups": [],
-            "state": {
-                "code": 48,
-                "name": "terminated"
-            },
-            "state_reason": {
-                "code": "Client.UserInitiatedShutdown",
-                "message": "Client.UserInitiatedShutdown: User initiated shutdown"
-            },
-            "state_transition_reason": "User initiated (2024-07-08 05:38:54 GMT)",
-            "tags": {
-                "Environment": "Production",
-                "Name": "lu_gate"
-            },
-            "usage_operation": "RunInstances",
-            "usage_operation_update_time": "2024-07-08T05:15:33+00:00",
-            "virtualization_type": "hvm"
-        },
-        {
-            "ami_launch_index": 0,
-            "architecture": "x86_64",
-            "block_device_mappings": [],
-            "boot_mode": "uefi-preferred",
-            "capacity_reservation_specification": {
-                "capacity_reservation_preference": "open"
-            },
-            "client_token": "06663b0235de42868892772cdf686ab9",
-            "cpu_options": {
-                "core_count": 1,
-                "threads_per_core": 2
-            },
-            "current_instance_boot_mode": "uefi",
-            "ebs_optimized": false,
-            "ena_support": true,
-            "enclave_options": {
-                "enabled": false
-            },
-            "hibernation_options": {
-                "configured": false
-            },
-            "hypervisor": "xen",
-            "image_id": "ami-09040d770ffe2224f",
-            "instance_id": "i-031a72979585c958c",
-            "instance_type": "t3.small",
-            "key_name": "lu3",
-            "launch_time": "2024-07-08T05:39:46+00:00",
-            "maintenance_options": {
-                "auto_recovery": "default"
-            },
-            "metadata_options": {
-                "http_endpoint": "enabled",
-                "http_protocol_ipv6": "disabled",
-                "http_put_response_hop_limit": 2,
-                "http_tokens": "required",
-                "instance_metadata_tags": "disabled",
-                "state": "pending"
-            },
-            "monitoring": {
-                "state": "disabled"
-            },
-            "network_interfaces": [],
-            "placement": {
-                "availability_zone": "us-east-2a",
-                "group_name": "",
-                "tenancy": "default"
-            },
-            "platform_details": "Linux/UNIX",
-            "private_dns_name": "",
-            "product_codes": [],
-            "public_dns_name": "",
-            "root_device_name": "/dev/sda1",
-            "root_device_type": "ebs",
-            "security_groups": [],
-            "state": {
-                "code": 48,
-                "name": "terminated"
-            },
-            "state_reason": {
-                "code": "Client.UserInitiatedShutdown",
-                "message": "Client.UserInitiatedShutdown: User initiated shutdown"
-            },
-            "state_transition_reason": "User initiated (2024-07-08 06:11:34 GMT)",
-            "tags": {
-                "Environment": "Production",
-                "Name": "lu_gate"
-            },
-            "usage_operation": "RunInstances",
-            "usage_operation_update_time": "2024-07-08T05:39:46+00:00",
+            "usage_operation_update_time": "2024-07-09T02:38:31+00:00",
             "virtualization_type": "hvm"
         }
     ]

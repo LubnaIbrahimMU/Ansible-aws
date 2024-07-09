@@ -145,18 +145,18 @@
                         "state": "associated"
                     },
                     "main": false,
-                    "route_table_association_id": "rtbassoc-06e82f4a89f2356b8",
+                    "route_table_association_id": "rtbassoc-04c372a63b8ae4940",
                     "route_table_id": "rtb-085c4906402ab09af",
-                    "subnet_id": "subnet-09d80cf876432d030"
+                    "subnet_id": "subnet-0dd7753059809c7ed"
                 },
                 {
                     "association_state": {
                         "state": "associated"
                     },
                     "main": false,
-                    "route_table_association_id": "rtbassoc-04c372a63b8ae4940",
+                    "route_table_association_id": "rtbassoc-06e82f4a89f2356b8",
                     "route_table_id": "rtb-085c4906402ab09af",
-                    "subnet_id": "subnet-0dd7753059809c7ed"
+                    "subnet_id": "subnet-09d80cf876432d030"
                 }
             ],
             "id": "rtb-085c4906402ab09af",
@@ -225,7 +225,7 @@
                     "assign_ipv6_address_on_creation": false,
                     "availability_zone": "us-east-2a",
                     "availability_zone_id": "use2-az1",
-                    "available_ip_address_count": 251,
+                    "available_ip_address_count": 250,
                     "cidr_block": "10.0.1.0/24",
                     "default_for_az": false,
                     "enable_dns64": false,

@@ -21,10 +21,10 @@ ansible-inventory -i demo.aws_ec2.yml --graph
 
 ssh-keygen -t rsa -b 4096  -f ~/.ssh/lana
 
-# for user ssh 
+# for user ssh  ...
 
 ssh cloud_gate@<public_ip>  ##get it from /data_resources/instance_info.json
 
 php artisan key:generate  ## ec2 key-test 
 
-nginx -t
+sudo nginx -t  
